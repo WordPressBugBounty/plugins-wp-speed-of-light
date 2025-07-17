@@ -3,7 +3,7 @@
  * Plugin Name: WP Speed of Light
  * Plugin URI: https://www.joomunited.com/wordpress-products/wp-speed-of-light
  * Description: WP Speed of Light is used to speed up your WP site. It will approach the speed of light
- * Version: 3.3.5
+ * Version: 3.3.6
  * Text Domain: wp-speed-of-light
  * Domain Path: /languages
  * Author: JoomUnited
@@ -60,7 +60,7 @@ if (!defined('WPSOL_SITEURL')) {
     define('WPSOL_SITEURL', get_site_url());
 }
 if (!defined('WPSOL_VERSION')) {
-    define('WPSOL_VERSION', '3.3.5');
+    define('WPSOL_VERSION', '3.3.6');
 }
 if (!defined('WPSOL_FILE')) {
     define('WPSOL_FILE', __FILE__);
@@ -142,6 +142,67 @@ if (is_admin()) {
         //phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Do not load anything more
         unset($_GET['activate']);
         return;
+    }
+
+    if (!function_exists('wpsolMergePluginMsg')) {
+        /**
+         * Show error when install
+         *
+         * @return void
+         */
+        function wpsolMergePluginMsg()
+        {
+            // Check if user dismissed within the last 7 days
+            $dismissed_time = get_user_meta(get_current_user_id(), 'wpsol_notice_dismissed_time', true);
+            if ($dismissed_time && (time() - $dismissed_time) < WEEK_IN_SECONDS) {
+                return;
+            }
+            ?>
+            <div class="notice notice-info is-dismissible" id="wpsol-merged-plugin-notice">
+                <p><strong>📢 IMPORTANT NOTICE:</strong></p>
+                <p>
+                    As JoomUnited continues to evolve, we’ve decided to merge the free versions of
+                    <strong>WP Meta SEO</strong>, <strong>WP Speed of Light</strong>, and <strong>WP Latest Posts</strong>
+                    into their respective premium editions.
+                </p>
+                <p>
+                    Therefore, this plugin will not be supported while it remains online for a certain period of time. You can use the
+                    <strong>30% OFF coupon</strong> to migrate to the pro version of the plugin: <strong>JU-EVOLVING</strong>
+                </p>
+                <p>
+                    <a href="https://www.joomunited.com/wordpress-products/wp-speed-of-light" class="button-primary" target="_blank">Get the new plugin version now >></a> &nbsp;
+                    <a href="https://www.joomunited.com/news/important-announcement-evolving-our-wordpress-extensions-for-better-service-and-performance" target="_blank">Read the full announcement here >></a>
+                </p>
+            </div>
+
+            <script>
+                jQuery(document).ready(function($){
+                    $('#wpsol-merged-plugin-notice').on('click', '.notice-dismiss', function(){
+                        $.post(ajaxurl, {
+                            action: 'wpsol_dismiss_notice_for_week',
+                            nonce: '<?php echo wp_create_nonce('ju_dismiss_notice');  //phpcs:ignore WordPress.Security.EscapeOutput -- Echo content ?>'
+                        });
+                    });
+                });
+            </script>
+            <?php
+        }
+    }
+    add_action('admin_notices', 'wpsolMergePluginMsg');
+
+    add_action('wp_ajax_wpsol_dismiss_notice_for_week', 'wpsol_dismiss_notice_for_week_callback');
+    /**
+     * Callback function to dismiss notice for a week
+     *
+     * @return void
+     */
+    function wpsol_dismiss_notice_for_week_callback()
+    {
+        check_ajax_referer('ju_dismiss_notice', 'nonce');
+
+        update_user_meta(get_current_user_id(), 'wpsol_notice_dismissed_time', time());
+
+        wp_send_json_success();
     }
 }
 

@@ -2,8 +2,8 @@
 Contributors: JoomUnited
 Tags: cache, caching, performance, speed test, performance test, wp-cache, cdn, combine, compress, speed plugin, database cache, deflate, gzip, http compression, js cache, minify, optimize, optimizer, page cache, performance, speed, expire headers, mobile cache
 Requires at least: 4.7
-Tested up to: 6.5
-Stable tag: 3.3.5
+Tested up to: 6.8
+Stable tag: 3.3.6
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -172,6 +172,9 @@ https://www.joomunited.com/wp-speed-of-light-developer-documentation
 1. 3rd party cache and CDN integrations
 
 == Changelog ==
+
+= 3.3.6 =
+ * Add : Admin notice about merging the free version of WP Speed of Light into the Pro version
 
 = 3.3.5 =
  * Fix : Update the message of the PHP version check tool
