@@ -12,6 +12,11 @@ WP Speed of Light is a WordPress speedup plugin and load time testing. Cache, Gz
 
 == Description ==
 
+## IMPORTANT NOTE ABOUT THIS PLUGIN: 
+After careful consideration, we've decided to merge the free versions of WP Meta SEO, WP Speed of Light, and WP Latest Posts into their respective premium versions. This consolidation will allow us to focus our resources on developing more robust, feature-rich extensions. We do offer some easy migration and prices for free users though.
+
+#### Read the full article: [Blog post announcement](https://www.joomunited.com/news/important-announcement-evolving-our-wordpress-extensions-for-better-service-and-performance "Important announcement: Evolving our extensions for better service and performance").
+
 WordPress does not have a system for speed optimization by default. That's why you need a powerful plugin that speed up WordPress with technical and advanced features, yet accessible to everyone. 
 WP Speed of Light starts with an advanced static cache, plus, you got a file minification and group tools, a database cleanup system, a .htaccess optimization, an auto-cache cleaner and a full CDN integration.
 
